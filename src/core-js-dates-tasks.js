@@ -155,8 +155,11 @@ function isDateInPeriod(date, period) {
  * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function formatDate(/* date */) {
-  throw new Error('Not implemented');
+function formatDate(date) {
+  const options = { timeZone: 'UTC' };
+  const day = new Date(date).toLocaleDateString('en-US', options);
+  const hours = new Date(date).toLocaleTimeString('en-US', options);
+  return `${day}, ${hours}`;
 }
 
 /**
@@ -171,10 +174,20 @@ function formatDate(/* date */) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountWeekendsInMonth(month, year) {
+  let result = 0;
+  const dateStart = new Date(Date.UTC(year, month, 0));
+  const endDate = dateStart.getUTCDate();
+  for (let i = 2; i <= endDate + 1; i += 1) {
+    const newDate = new Date(
+      dateStart.getUTCFullYear(),
+      dateStart.getUTCMonth(),
+      i
+    );
+    if (newDate.getUTCDay() === 6 || newDate.getUTCDay() === 0) result += 1;
+  }
+  return result;
 }
-
 /**
  * Returns the week number of the year for a given date.
  * The first week of the year is defined according to ISO8601.
