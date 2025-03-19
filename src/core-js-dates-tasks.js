@@ -17,8 +17,8 @@
  * '01 Jan 1970 00:00:00 UTC' => 0
  * '04 Dec 1995 00:12:00 UTC' => 818035920000
  */
-function dateToTimestamp(/* date */) {
-  throw new Error('Not implemented');
+function dateToTimestamp(date) {
+  return Date.parse(date);
 }
 
 /**
@@ -31,8 +31,15 @@ function dateToTimestamp(/* date */) {
  * Date(2023, 5, 1, 8, 20, 55) => '08:20:55'
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
-function getTime(/* date */) {
-  throw new Error('Not implemented');
+function getTime(date) {
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+  const zero = '0';
+  if (hours < 10) hours = zero + hours;
+  if (minutes < 10) minutes = zero + minutes;
+  if (seconds < 10) seconds = zero + seconds;
+  return `${hours}:${minutes}:${seconds}`;
 }
 
 /**
@@ -46,10 +53,19 @@ function getTime(/* date */) {
  * '03 Dec 1995 00:12:00 UTC' => 'Sunday'
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
-function getDayName(/* date */) {
-  throw new Error('Not implemented');
+function getDayName(date) {
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  const dayIndex = new Date(date).getUTCDay();
+  return days[dayIndex];
 }
-
 /**
  * Returns the date of the next Friday from a given date.
  *
@@ -61,8 +77,13 @@ function getDayName(/* date */) {
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const tilFriday = 5 - date.getUTCDay();
+  if (tilFriday === 0) return new Date(date.setUTCDate(date.getUTCDate() + 7));
+  if (tilFriday > 0)
+    return new Date(date.setUTCDate(date.getUTCDate() + tilFriday));
+  if (tilFriday < 0) return new Date(date.setUTCDate(date.getUTCDate() + 6));
+  return date;
 }
 
 /**
@@ -76,8 +97,11 @@ function getNextFriday(/* date */) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  const monthsInYear = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const isNotLeap = Boolean(year % 4);
+  if (!isNotLeap) monthsInYear[1] += 1;
+  return monthsInYear[month - 1];
 }
 
 /**
@@ -91,10 +115,10 @@ function getCountDaysInMonth(/* month, year */) {
  * '2024-02-01T00:00:00.000Z', '2024-02-02T00:00:00.000Z'  => 2
  * '2024-02-01T00:00:00.000Z', '2024-02-12T00:00:00.000Z'  => 12
  */
-function getCountDaysOnPeriod(/* dateStart, dateEnd */) {
-  throw new Error('Not implemented');
+function getCountDaysOnPeriod(dateStart, dateEnd) {
+  const difference = Date.parse(dateEnd) - Date.parse(dateStart);
+  return difference / (1000 * 3600 * 24) + 1;
 }
-
 /**
  * Returns true if a given date is within a specified range, including both the start and end dates.
  *
@@ -112,8 +136,12 @@ function getCountDaysOnPeriod(/* dateStart, dateEnd */) {
  * '2024-02-02', { start: '2024-02-02', end: '2024-03-02' } => true
  * '2024-02-10', { start: '2024-02-02', end: '2024-03-02' } => true
  */
-function isDateInPeriod(/* date, period */) {
-  throw new Error('Not implemented');
+function isDateInPeriod(date, period) {
+  const start = Date.parse(period.start);
+  const end = Date.parse(period.end);
+  const day = Date.parse(date);
+  if (day >= start && day <= end) return true;
+  return false;
 }
 
 /**
