@@ -148,12 +148,11 @@ function isDateInPeriod(date, period) {
  * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function formatDate(/* date */) {
-  throw new Error('Not implemented');
-  // const options = { timeZone: 'UTC' };
-  // const day = new Date(date).toLocaleDateString('en-US', options);
-  // const hours = new Date(date).toLocaleTimeString('en-US', options);
-  // return `${day}, ${hours}`;
+function formatDate(date) {
+  const options = { timeZone: 'UTC' };
+  const day = new Date(date).toLocaleDateString('en-US', options);
+  const hours = new Date(date).toLocaleTimeString('en-US', options);
+  return `${day}, ${hours}`;
 }
 
 /**
@@ -168,19 +167,20 @@ function formatDate(/* date */) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(month, year) {
-  let result = 0;
-  const dateStart = new Date(Date.UTC(year, month, 0));
-  const endDate = dateStart.getUTCDate();
-  for (let i = 2; i <= endDate + 1; i += 1) {
-    const newDate = new Date(
-      dateStart.getUTCFullYear(),
-      dateStart.getUTCMonth(),
-      i
-    );
-    if (newDate.getUTCDay() === 6 || newDate.getUTCDay() === 0) result += 1;
-  }
-  return result;
+function getCountWeekendsInMonth(/* month, year */) {
+  throw new Error('Not implemented');
+  // let result = 0;
+  // const dateStart = new Date(Date.UTC(year, month, 0));
+  // const endDate = dateStart.getUTCDate();
+  // for (let i = 2; i <= endDate + 1; i += 1) {
+  //   const newDate = new Date(
+  //     dateStart.getUTCFullYear(),
+  //     dateStart.getUTCMonth(),
+  //     i
+  //   );
+  //   if (newDate.getUTCDay() === 6 || newDate.getUTCDay() === 0) result += 1;
+  // }
+  // return result;
 }
 /**
  * Returns the week number of the year for a given date.
@@ -195,24 +195,25 @@ function getCountWeekendsInMonth(month, year) {
  * Date(2024, 0, 31) => 5
  * Date(2024, 1, 23) => 8
  */
-function getWeekNumberByDate(date) {
-  let result = 0;
-  for (let i = 1; i <= 12; i += 1) {
-    const checkDate = new Date(date.getUTCFullYear(), i);
-    for (let j = 1; j <= checkDate.getUTCDate() + 2; j += 1) {
-      if (result === 0 && checkDate.getUTCDay() === 4) result += 1;
-      if (result === 0) {
-        checkDate.setUTCDate(j);
-      } else {
-        checkDate.setUTCDate(j + 1);
-      }
-      if (checkDate.toUTCString() === date.toUTCString() && result === 0)
-        return 1;
-      if (checkDate.getUTCDay() === 0) result += 1;
-      if (checkDate.toUTCString() === date.toUTCString()) return result;
-    }
-  }
-  return 1;
+function getWeekNumberByDate(/* date */) {
+  throw new Error('Not implemented');
+  // let result = 0;
+  // for (let i = 1; i <= 12; i += 1) {
+  //   const checkDate = new Date(date.getUTCFullYear(), i);
+  //   for (let j = 1; j <= checkDate.getUTCDate() + 2; j += 1) {
+  //     if (result === 0 && checkDate.getUTCDay() === 4) result += 1;
+  //     if (result === 0) {
+  //       checkDate.setUTCDate(j);
+  //     } else {
+  //       checkDate.setUTCDate(j + 1);
+  //     }
+  //     if (checkDate.toUTCString() === date.toUTCString() && result === 0)
+  //       return 1;
+  //     if (checkDate.getUTCDay() === 0) result += 1;
+  //     if (checkDate.toUTCString() === date.toUTCString()) return result;
+  //   }
+  // }
+  // return 1;
 }
 
 /**
