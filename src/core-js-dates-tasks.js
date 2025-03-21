@@ -167,20 +167,18 @@ function formatDate(date) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
-  // let result = 0;
-  // const dateStart = new Date(Date.UTC(year, month, 0));
-  // const endDate = dateStart.getUTCDate();
-  // for (let i = 2; i <= endDate + 1; i += 1) {
-  //   const newDate = new Date(
-  //     dateStart.getUTCFullYear(),
-  //     dateStart.getUTCMonth(),
-  //     i
-  //   );
-  //   if (newDate.getUTCDay() === 6 || newDate.getUTCDay() === 0) result += 1;
-  // }
-  // return result;
+function getCountWeekendsInMonth(month, year) {
+  let count = 0;
+  const date = new Date(year, month - 1, 1);
+
+  while (date.getMonth() === month - 1) {
+    if (date.getDay() === 6 || date.getDay() === 0) {
+      count += 1;
+    }
+    date.setDate(date.getDate() + 1);
+  }
+
+  return count;
 }
 /**
  * Returns the week number of the year for a given date.
