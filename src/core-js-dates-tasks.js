@@ -168,20 +168,19 @@ function formatDate(/* date */) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
-  // let result = 0;
-  // const dateStart = new Date(Date.UTC(year, month, 0));
-  // const endDate = dateStart.getUTCDate();
-  // for (let i = 2; i <= endDate + 1; i += 1) {
-  //   const newDate = new Date(
-  //     dateStart.getUTCFullYear(),
-  //     dateStart.getUTCMonth(),
-  //     i
-  //   );
-  //   if (newDate.getUTCDay() === 6 || newDate.getUTCDay() === 0) result += 1;
-  // }
-  // return result;
+function getCountWeekendsInMonth(month, year) {
+  let result = 0;
+  const dateStart = new Date(Date.UTC(year, month, 0));
+  const endDate = dateStart.getUTCDate();
+  for (let i = 2; i <= endDate + 1; i += 1) {
+    const newDate = new Date(
+      dateStart.getUTCFullYear(),
+      dateStart.getUTCMonth(),
+      i
+    );
+    if (newDate.getUTCDay() === 6 || newDate.getUTCDay() === 0) result += 1;
+  }
+  return result;
 }
 /**
  * Returns the week number of the year for a given date.
